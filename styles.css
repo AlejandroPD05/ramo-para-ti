@@ -1,104 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
-    margin: 0;
-    background: #0f0f0f;
-    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at 60% 0%, #1a0a2e 0%, #0d0d1a 60%, #000 100%);
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
     overflow: hidden;
+    position: relative;
+}
+
+.stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.ramo {
+    gap: 28px;
+    z-index: 1;
     position: relative;
-    width: 300px;
-    height: 400px;
 }
 
-.papel {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 180px;
-    height: 160px;
-    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
-    clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
-    z-index: 10;
-    border-radius: 0 0 15px 15px;
+.escena {
+    position: relative;
+    width: 340px;
+    height: 480px;
 }
 
-.flor-completa {
-    position: absolute;
-    bottom: 80px; /* Sale desde dentro del papel */
-    width: 100px;
-    height: 300px;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    transform-origin: bottom center;
-}
-
-/* Orientación del ramo */
-.fc1 { left: 20px; transform: rotate(-15deg); }
-.fc2 { left: 100px; transform: rotate(0deg); }
-.fc3 { left: 180px; transform: rotate(15deg); }
-
-.tallo {
-    width: 4px;
-    height: 0;
-    background: linear-gradient(to top, #1b4d3e, #4CAF50);
-    border-radius: 2px;
-}
-
-.flor {
-    width: 100px;
-    height: 100px;
+#ramo-svg {
+    width: 100%;
+    height: 100%;
     overflow: visible;
-    transform: scale(0);
-}
-
-.petalo {
-    transform-origin: 50% 50%;
-}
-
-.centro {
-    fill: #ffdb58;
-    filter: drop-shadow(0 0 5px rgba(255, 219, 88, 0.8));
 }
 
 .mensaje {
-    color: white;
-    font-size: 24px;
-    margin-top: 25px;
-    min-height: 32px;
+    color: #f9e4ff;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    text-align: center;
+    min-height: 34px;
+    text-shadow: 0 0 30px rgba(255, 150, 220, 0.4);
 }
 
-.replay {
-    margin-top: 20px;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 25px;
-    background: #ff4d6d;
-    color: white;
-    font-weight: bold;
+.btn-replay {
+    padding: 13px 32px;
+    border: 1.5px solid rgba(255, 200, 240, 0.4);
+    border-radius: 40px;
+    background: transparent;
+    color: #f9d5ff;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
 }
-
-.replay:hover { transform: scale(1.1); }
+.btn-replay:hover {
+    background: rgba(255, 180, 240, 0.12);
+    border-color: rgba(255, 200, 240, 0.8);
+    color: #fff;
+    transform: scale(1.04);
+}
+.btn-replay:active { transform: scale(0.97); }
 
 .particula {
-    position: absolute;
-    width: 6px;
-    height: 6px;
+    position: fixed;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     pointer-events: none;
-    z-index: 20;
+    z-index: 100;
 }

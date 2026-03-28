@@ -75,3 +75,13 @@ body {
   color:white;
   cursor:pointer;
 }
+
+/* Partículas */
+.particula {
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:#fff;
+  border-radius:50%;
+  pointer-events:none;
+}

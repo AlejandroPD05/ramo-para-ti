@@ -1,7 +1,7 @@
 body {
     margin: 0;
-    background: #121212;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #111;
+    font-family: sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,100 +17,101 @@ body {
 
 .ramo {
     position: relative;
-    width: 300px;
-    height: 400px;
+    width: 300px; /* Un poco más ancho para el fotorrealismo */
+    height: 450px;
+    margin: auto;
 }
 
-/* Jarrón rosa simple fotorrealista */
-.papel {
+/* El jarrón/envoltorio de papel de estilo fotorrealista y cónico */
+.envoltorio-papel {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 200px;
     height: 180px;
-    background: #ffb6c1; /* Color rosa del original */
-    border-radius: 20px 20px 0 0;
-    z-index: 2; /* Encima de los tallos inferiores */
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+    clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%); /* Forma cónica */
+    border-radius: 0 0 20px 20px;
+    z-index: 10; /* Encima de los tallos inferiores */
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
-/* Tallos alineados verticalmente */
-.tallo {
+/* Contenedor para cada tallo y flor para una orientación más fácil (\ | /) */
+.tallo-container {
     position: absolute;
-    width: 4px;
-    height: 0;
-    background: linear-gradient(to top, #1b4d3e, #4CAF50);
-    border-radius: 2px;
-    z-index: 1; /* Detrás del jarrón */
-}
-
-/* Bases de tallos para terminar en las flores */
-.t1 { left: 60px; bottom: 80px; }
-.t2 { left: 110px; bottom: 110px; } /* Central más alto */
-.t3 { left: 160px; bottom: 80px; }
-
-/* Flores fotorrealistas */
-.flor {
-    position: absolute;
+    bottom: 160px; /* Comienza justo encima del papel */
     width: 100px;
-    height: 100px;
-    z-index: 3; /* Encima del jarrón */
-    overflow: visible !important;
+    height: 250px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    transform-origin: bottom center;
 }
 
-/* Centros de flores alineados con los tallos */
-.f1 { left: 10px; bottom: 210px; }
-.f2 { left: 60px; bottom: 240px; } /* Central más alta */
-.f3 { left: 110px; bottom: 210px; }
+/* Orientación y posición de los contenedores de tallos (\ | /) */
+.tc1 { left: 20px; transform: rotate(-15deg); } /* Izquierdo - Rojo \ */
+.tc2 { left: 100px; transform: rotate(0deg); }   /* Central - Azul | */
+.tc3 { left: 180px; transform: rotate(15deg); }  /* Derecho - Teal / */
 
-/* REGLA CLAVE: Los pétalos rotan sobre el centro del SVG */
-.petalo {
-    transform-origin: 50% 50%;
+.tallo {
+    width: 4px;
+    height: 0; /* Empieza en 0 para la animación */
+    background: linear-gradient(#0f0, green);
+    border-radius: 2px;
 }
 
-/* CORRECCIÓN INTERACTIVA: El clic se detecta sobre toda la forma de la flor */
-.petalos {
-    pointer-events: all;
+.flor-img {
+    width: 90px;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+    z-index: 5; /* Detrás del botón central */
+    transform: scale(0); /* Empieza oculto */
+}
+
+/* El "Botón Central" interactivo y brillante */
+.flor-centro-btn {
+    position: absolute;
+    top: 35px; /* Ajusta la posición sobre la imagen de la flor fotorrealista */
+    width: 15px;
+    height: 15px;
+    background: #ffdb58; /* Color base dorado */
+    border-radius: 50%;
     cursor: pointer;
+    box-shadow: 0 0 15px #fff176, 0 0 30px #fff176; /* Brillo intenso */
+    z-index: 20; /* Encima de todo */
+    transition: transform 0.2s;
+    transform: scale(0); /* Empieza oculto */
 }
 
-.centro {
-    fill: #ffdb58;
-    filter: drop-shadow(0 0 5px #fff176);
+.flor-centro-btn:hover {
+    transform: scale(1.2); /* Efecto de hover */
 }
 
-/* Texto mecanografiado con EFECTO GLOW */
+/* Mensaje y Botón de Reinicio */
 .mensaje {
     color: white;
-    font-size: 26px;
-    margin-top: 30px;
-    min-height: 40px;
-    font-weight: 300;
-    text-shadow: 0 0 10px #fff, 0 0 20px #ffb3c1; /* Efecto de brillo */
+    font-size: 24px;
+    margin-top: 20px;
+    min-height: 40px; /* Evita saltos de layout */
 }
 
 .replay {
-    margin-top: 20px;
-    padding: 12px 24px;
+    margin-top: 10px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 30px;
+    border-radius: 20px;
     background: #ff4d6d;
     color: white;
-    font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-weight: bold;
 }
 
-.replay:hover {
-    background: #ff758c;
-    transform: scale(1.1);
-}
-
+/* Partículas */
 .particula {
     position: absolute;
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    pointer-events: none;
+    pointer-events: none; /* No interfiere con los clics */
 }

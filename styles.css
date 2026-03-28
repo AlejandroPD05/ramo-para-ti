@@ -21,7 +21,7 @@ body {
     height: 400px;
 }
 
-/* Envoltorio de papel */
+/* Jarrón rosa simple */
 .papel {
     position: absolute;
     bottom: 0;
@@ -29,39 +29,40 @@ body {
     transform: translateX(-50%);
     width: 200px;
     height: 180px;
-    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-    clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
-    z-index: 10;
+    background: #ffb6c1; /* Color rosa del original */
+    border-radius: 20px 20px 0 0;
+    z-index: 2; /* Encima de los tallos */
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
-/* Tallos */
+/* Tallos alineados verticalmente */
 .tallo {
     position: absolute;
-    bottom: 80px;
     width: 4px;
     height: 0;
     background: linear-gradient(to top, #1b4d3e, #4CAF50);
     border-radius: 2px;
-    z-index: 1;
+    z-index: 1; /* Detrás del jarrón */
 }
 
-.t1 { left: 80px; transform: rotate(-15deg); }
-.t2 { left: 148px; }
-.t3 { left: 216px; transform: rotate(15deg); }
+/* Bases de tallos para terminar en las flores */
+.t1 { left: 60px; bottom: 80px; }
+.t2 { left: 110px; bottom: 110px; } /* Central más alto */
+.t3 { left: 160px; bottom: 80px; }
 
 /* Flores */
 .flor {
     position: absolute;
     width: 100px;
     height: 100px;
-    z-index: 5;
+    z-index: 3; /* Encima del jarrón */
     overflow: visible !important;
 }
 
-.f1 { left: 30px; bottom: 230px; }
-.f2 { left: 100px; bottom: 270px; }
-.f3 { left: 170px; bottom: 230px; }
+/* Centros de flores alineados con los tallos */
+.f1 { left: 10px; bottom: 210px; }
+.f2 { left: 60px; bottom: 240px; } /* Central más alta */
+.f3 { left: 110px; bottom: 210px; }
 
 /* REGLA CLAVE: Los pétalos rotan sobre el centro del SVG */
 .petalo {
@@ -71,9 +72,10 @@ body {
 .centro {
     fill: #ffdb58;
     filter: drop-shadow(0 0 5px #fff176);
+    cursor: pointer; /* Muestra que se puede hacer clic */
 }
 
-/* Texto */
+/* Texto mecanografiado */
 .mensaje {
     color: white;
     font-size: 26px;

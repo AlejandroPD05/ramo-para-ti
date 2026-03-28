@@ -1,112 +1,112 @@
 body {
-  margin:0;
-  background:#121212; /* Fondo casi negro para que resalten los colores */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  overflow:hidden;
+    margin: 0;
+    background: #121212;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .container {
-  text-align:center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .ramo {
-  position:relative;
-  width:280px;
-  height:420px;
-  margin:auto;
-  overflow: hidden; /* Oculta la base de los tallos */
+    position: relative;
+    width: 300px;
+    height: 400px;
 }
 
-/* Envoltorio de papel con forma cónica */
+/* Envoltorio de papel del ramo (Forma cónica con clip-path) */
 .papel {
-  position:absolute;
-  bottom:0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 190px;
-  height: 180px;
-  /* Degradado suave rosa/azul como en tu imagen */
-  background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
-  /* clip-path crea la forma trapezoidal del ramo */
-  clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
-  border-radius: 0 0 20px 20px;
-  z-index: 1; /* Detrás de las flores */
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 190px;
+    height: 180px;
+    /* Degradado suave rosa/azul como en tu imagen */
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+    clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+    border-radius: 0 0 20px 20px;
+    z-index: 1; /* Detrás de las flores */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
+/* Tallos alineados verticalmente */
 .tallo {
-  position:absolute;
-  bottom: 150px; /* Comienza dentro del papel */
-  width:4px;
-  height:0;
-  background: linear-gradient(to top, green, #0f0);
-  border-radius: 2px;
-  z-index: 2;
+    position: absolute;
+    bottom: 80px;
+    width: 4px;
+    height: 0;
+    background: linear-gradient(to top, #1b4d3e, #4CAF50);
+    border-radius: 2px;
+    z-index: 2;
 }
 
-/* Posiciones de los tallos coordinadas */
-.t1 { left: 70px; }
-.t2 { left: 140px; }
-.t3 { left: 210px; }
+/* Bases de tallos para terminar en las flores */
+.t1 { left: 80px; transform: rotate(-15deg); }
+.t2 { left: 148px; }
+.t3 { left: 216px; transform: rotate(15deg); }
 
-/* Flores SVG */
+/* Flores */
 .flor {
-  position:absolute;
-  width:100px;
-  height:100px;
-  z-index: 3; /* Encima de todo */
-  overflow: visible !important; /* Para que los pétalos no se corten */
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    z-index: 3; /* Encima de todo */
+    overflow: visible !important; /* Para que los pétalos no se corten */
 }
 
-/* Alineación de las flores sobre los tallos */
-.f1 { left: 22px; bottom: 260px; }
-.f2 { left: 92px; bottom: 290px; } /* Central un poco más alta */
-.f3 { left: 162px; bottom: 260px; }
+/* Centros de flores alineados con los tallos */
+.f1 { left: 30px; bottom: 230px; }
+.f2 { left: 100px; bottom: 270px; } /* Central más alta */
+.f3 { left: 170px; bottom: 230px; }
 
-/* CLAVE: Los pétalos rotan desde el centro exacto del SVG (50,50) */
+/* REGLA CLAVE: Los pétalos rotan sobre el centro exacto del SVG (50,50) */
 .petalo {
-  transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
 }
 
 .centro {
-  fill: #ffdb58; /* Amarillo dorado brillante */
-  filter: drop-shadow(0 0 8px #fff176);
+    fill: #ffdb58; /* Amarillo dorado brillante */
+    filter: drop-shadow(0 0 5px #fff176);
 }
 
-/* Mensaje mecanografiado */
+/* Texto mecanografiado */
 .mensaje {
-  color:white;
-  font-size:26px;
-  margin-top:20px;
-  min-height: 35px; /* Evita saltos de layout */
-  font-weight: 300;
+    color: white;
+    font-size: 26px;
+    margin-top: 30px;
+    min-height: 40px;
+    font-weight: 300;
 }
 
-/* Botón con estilo moderno */
 .replay {
-  margin-top:15px;
-  padding:10px 20px;
-  border:none;
-  border-radius:20px;
-  background:#ff4d6d;
-  color:white;
-  font-weight: bold;
-  cursor:pointer;
-  transition: transform 0.2s;
+    margin-top: 20px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    background: #ff4d6d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .replay:hover {
-  transform: scale(1.1);
+    background: #ff758c;
+    transform: scale(1.1);
 }
 
-/* Partículas de la explosión */
 .particula {
-  position:absolute;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  pointer-events:none;
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    pointer-events: none;
 }

@@ -1,8 +1,7 @@
 // Una lista más variada y alegre de colores para las flores
 const colores = ["#ff4d6d","#ffd166","#00f5d4","#9b5de5","#f15bb5"];
-// Vacío para forzar colores aleatorios cada vez que se pulse 'Repetir'
+// Vacío para forzar colores aleatorios cada vez
 const colorFlores = []; 
-
 const mensajeDiv = document.querySelector(".mensaje");
 
 function animar() {
@@ -28,7 +27,7 @@ function animar() {
         const randomColor = colores[Math.floor(Math.random() * colores.length)];
         gsap.set(petalos, {fill: randomColor});
 
-        // Configuración inicial de pétalos (Geometría centrada 50,50)
+        // Configuración inicial de pétalos
         gsap.set(petalos, { 
             rotation: (i) => i * (360 / petalos.length),
             scale: 0,

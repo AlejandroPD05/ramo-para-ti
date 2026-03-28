@@ -21,7 +21,7 @@ body {
     height: 400px;
 }
 
-/* Envoltorio de papel del ramo (Forma cónica) */
+/* Envoltorio de papel del ramo (Forma cónica con clip-path) */
 .papel {
     position: absolute;
     bottom: 0;
@@ -67,7 +67,7 @@ body {
 .f2 { left: 100px; bottom: 270px; } /* Central más alta */
 .f3 { left: 170px; bottom: 230px; }
 
-/* REGLA CLAVE: Los pétalos rotan sobre el centro del SVG (50,50) */
+/* REGLA CLAVE: Los pétalos rotan sobre el centro exacto del SVG (50,50) */
 .petalo {
     transform-origin: 50% 50%;
 }

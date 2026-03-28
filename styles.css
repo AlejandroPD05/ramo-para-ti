@@ -1,7 +1,7 @@
 body {
     margin: 0;
-    background: #121212;
-    font-family: 'Segoe UI', sans-serif;
+    background: #111;
+    font-family: sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,79 +17,101 @@ body {
 
 .ramo {
     position: relative;
-    width: 300px;
-    height: 400px;
+    width: 300px; /* Un poco más ancho para el fotorrealismo */
+    height: 450px;
+    margin: auto;
 }
 
-.papel {
+/* El jarrón/envoltorio de papel de estilo fotorrealista y cónico */
+.envoltorio-papel {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 190px;
+    width: 200px;
     height: 180px;
     background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
-    clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
-    z-index: 1;
+    clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%); /* Forma cónica fotorrealista */
+    border-radius: 0 0 20px 20px;
+    z-index: 10; /* Encima de los tallos inferiores */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
+
+/* Contenedor para cada tallo y flor fotorrealista para una orientación más fácil (\ | /) */
+.tallo-container {
+    position: absolute;
+    bottom: 160px; /* Comienza justo encima del papel */
+    width: 100px;
+    height: 250px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    transform-origin: bottom center;
+}
+
+/* Orientación y posición de los contenedores de tallos (\ | /) */
+.tc1 { left: 20px; transform: rotate(-15deg); } /* Izquierdo - Rojo \ */
+.tc2 { left: 100px; transform: rotate(0deg); }   /* Central - Azul | */
+.tc3 { left: 180px; transform: rotate(15deg); }  /* Derecho - Teal / */
 
 .tallo {
-    position: absolute;
-    bottom: 100px;
     width: 4px;
-    height: 0;
-    background: linear-gradient(to top, #1b4d3e, #4CAF50);
+    height: 0; /* Empieza en 0 para la animación */
+    background: linear-gradient(#0f0, green);
     border-radius: 2px;
-    z-index: 2;
 }
 
-.t1 { left: 75px; transform: rotate(-10deg); }
-.t2 { left: 148px; }
-.t3 { left: 221px; transform: rotate(10deg); }
+.flor-img {
+    width: 90px;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+    z-index: 5; /* Detrás del botón central */
+    transform: scale(0); /* Empieza oculto fotorrealista */
+}
 
-.flor {
+/* El "Botón Central" interactivo y brillante fotorrealista */
+.flor-centro-btn {
     position: absolute;
-    width: 100px;
-    height: 100px;
-    z-index: 3;
-    overflow: visible !important;
+    top: 35px; /* Ajusta la posición sobre la imagen de la flor fotorrealista fotorrealista */
+    width: 15px;
+    height: 15px;
+    background: #ffdb58; /* Color base dorado */
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 15px #fff176, 0 0 30px #fff176; /* Brillo intenso */
+    z-index: 20; /* Encima de todo */
+    transition: transform 0.2s;
+    transform: scale(0); /* Empieza oculto fotorrealista */
 }
 
-.f1 { left: 25px; bottom: 250px; }
-.f2 { left: 100px; bottom: 280px; }
-.f3 { left: 175px; bottom: 250px; }
-
-.petalo {
-    transform-origin: 50% 50%; /* Punto de rotación central */
+.flor-centro-btn:hover {
+    transform: scale(1.2); /* Efecto de hover */
 }
 
-.centro {
-    fill: #ffdb58;
-    filter: drop-shadow(0 0 5px rgba(255, 241, 118, 0.8));
-}
-
+/* Mensaje fotorrealista y Botón de Reinicio fotorrealista */
 .mensaje {
     color: white;
     font-size: 24px;
     margin-top: 20px;
-    min-height: 30px;
+    min-height: 40px; /* Evita saltos de layout */
 }
 
 .replay {
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 10px 20px;
-    border-radius: 20px;
     border: none;
+    border-radius: 20px;
     background: #ff4d6d;
     color: white;
     cursor: pointer;
+    font-weight: bold;
 }
 
+/* Partículas fotorrealistas */
 .particula {
     position: absolute;
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    pointer-events: none;
-    z-index: 10;
+    pointer-events: none; /* No interfiere con los clics fotorrealistas */
 }

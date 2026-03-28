@@ -1,56 +1,118 @@
 body {
-    margin: 0; background: #121212;
-    display: flex; justify-content: center; align-items: center;
-    height: 100vh; font-family: sans-serif; overflow: hidden;
+    margin: 0;
+    background: #111;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
 }
 
-.ramo { position: relative; width: 300px; height: 400px; }
+.container {
+    text-align: center;
+    position: relative; /* Necesario para posicionar el botón */
+}
 
-/* PAPEL CÓNICO (Trapecio) */
+.ramo {
+    position: relative;
+    width: 250px;
+    height: 400px;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Envoltorio de papel con forma cónica */
 .papel {
-    position: absolute; bottom: 0; left: 50%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
     transform: translateX(-50%);
-    width: 180px; height: 160px;
-    background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
-    clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
-    z-index: 10;
+    width: 190px;
+    height: 180px;
+    /* Degradado suave rosa/azul como en tu imagen */
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+    /* clip-path crea la forma trapezoidal del ramo */
+    clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+    border-radius: 0 0 20px 20px;
+    z-index: 1; /* Detrás de las flores */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
-/* TALLOS EN ABANICO \ | / */
 .tallo {
-    position: absolute; bottom: 50px; left: 50%;
-    width: 4px; height: 0; background: #2d5a27;
-    transform-origin: bottom center; z-index: 5;
+    position: absolute;
+    bottom: 150px; /* Comienza dentro del papel */
+    width: 4px;
+    height: 0;
+    background: linear-gradient(to top, green, #0f0);
+    border-radius: 2px;
+    z-index: 2;
 }
-.t1 { transform: translateX(-50%) rotate(-20deg); }
-.t2 { transform: translateX(-50%) rotate(0deg); }
-.t3 { transform: translateX(-50%) rotate(20deg); }
 
-/* FLORES */
+/* Posiciones de los tallos coordinadas */
+.t1 { left: 70px; }
+.t2 { left: 140px; }
+.t3 { left: 210px; }
+
+/* Flores SVG */
 .flor {
-    position: absolute; width: 80px; height: 80px;
-    z-index: 15; cursor: pointer; overflow: visible;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    z-index: 3; /* Encima de todo */
+    overflow: visible !important; /* Para que los pétalos no se corten */
 }
-.f1 { left: 20px; top: 80px; }
-.f2 { left: 110px; top: 40px; }
-.f3 { left: 200px; top: 80px; }
 
-.petalo { transform-origin: 50px 50px; }
-.centro { fill: #fff176; filter: drop-shadow(0 0 5px gold); }
+/* CORRECCIÓN: Alineación vertical de las flores sobre los tallos */
+.f1 { left: 22px; bottom: 260px; }
+.f2 { left: 92px; bottom: 290px; } /* Central un poco más alta */
+.f3 { left: 162px; bottom: 260px; }
 
-/* TEXTO CON GLOW */
+/* CLAVE: Los pétalos rotan sobre el centro exacto del SVG (50,50) */
+.petalo {
+    transform-origin: 50% 50%;
+}
+
+.centro {
+    fill: #ffdb58; /* Amarillo dorado brillante */
+    filter: drop-shadow(0 0 8px #fff176);
+}
+
 .mensaje {
-    color: white; font-size: 24px; margin-top: 20px;
-    text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d;
-    min-height: 30px; text-align: center;
+    color: white;
+    font-size: 26px;
+    margin-top: 20px;
+    min-height: 35px;
+    font-weight: 300;
+}
+
+/* CORRECCIÓN: Centrado perfecto del botón */
+.btn-centrado {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 15px;
 }
 
 .replay {
-    margin-top: 20px; padding: 10px 25px; border: none;
-    border-radius: 20px; background: #ff4d6d; color: white;
-    cursor: pointer; font-weight: bold; transition: 0.3s;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background: #ff4d6d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.replay:hover {
+    background: #ff758c;
 }
 
 .particula {
-    position: absolute; pointer-events: none; border-radius: 50%;
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    pointer-events: none;
 }

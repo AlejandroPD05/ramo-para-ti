@@ -1,40 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Ramo para Alba 🌸</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un Ramo para Alba 🌸</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="ramo">
-            <div class="tallo t1"></div>
-            <div class="tallo t2"></div>
-            <div class="tallo t3"></div>
 
-            <svg class="flor f1" viewBox="0 0 100 100" onclick="estallar(this, '#ff4d6d')">
-                <g class="petalos-grp"></g>
-                <circle cx="50" cy="50" r="10" class="centro"/>
-            </svg>
+<div class="container">
 
-            <svg class="flor f2" viewBox="0 0 100 100" onclick="estallar(this, '#ffdb58')">
-                <g class="petalos-grp"></g>
-                <circle cx="50" cy="50" r="10" class="centro"/>
-            </svg>
+  <div class="ramo">
+    <div class="papel"></div>
 
-            <svg class="flor f3" viewBox="0 0 100 100" onclick="estallar(this, '#9b5de5')">
-                <g class="petalos-grp"></g>
-                <circle cx="50" cy="50" r="10" class="centro"/>
-            </svg>
+    <div class="tallo t1"></div>
+    <div class="tallo t2"></div>
+    <div class="tallo t3"></div>
 
-            <div class="papel"></div>
-        </div>
+    <svg class="flor f1" viewBox="0 0 100 100">
+      <circle class="centro" cx="50" cy="50" r="10"/>
+      <g class="petalos">
+        <ellipse class="petalo" cx="50" cy="25" rx="10" ry="25"/>
+        <ellipse class="petalo" cx="50" cy="25" rx="10" ry="25"/>
+        <ellipse class="petalo" cx="50" cy="25" rx="10" ry="25"/>
+        <ellipse class="petalo" cx="50" cy="25" rx="10" ry="25"/>
+        <ellipse class="petalo" cx="50" cy="25" rx="10" ry="25"/>
+        <ellipse class="petalo" cx="50" cy="25" rx="10" ry="25"/>
+      </g>
+    </svg>
 
-        <div class="mensaje"></div>
-        <button class="replay" onclick="iniciarAnimacion()">Repetir Magia ✨</button>
-    </div>
+    <svg class="flor f2" viewBox="0 0 100 100">
+      <circle class="centro" cx="50" cy="50" r="9"/>
+      <g class="petalos">
+        <ellipse class="petalo" cx="50" cy="28" rx="8" ry="22"/>
+        <ellipse class="petalo" cx="50" cy="28" rx="8" ry="22"/>
+        <ellipse class="petalo" cx="50" cy="28" rx="8" ry="22"/>
+        <ellipse class="petalo" cx="50" cy="28" rx="8" ry="22"/>
+        <ellipse class="petalo" cx="50" cy="28" rx="8" ry="22"/>
+        <ellipse class="petalo" cx="50" cy="28" rx="8" ry="22"/>
+        <ellipse class="petalo" cx="50" cy="28" rx="8" ry="22"/>
+      </g>
+    </svg>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="script.js"></script>
+    <svg class="flor f3" viewBox="0 0 100 100">
+      <circle class="centro" cx="50" cy="50" r="11"/>
+      <g class="petalos">
+        <ellipse class="petalo" cx="50" cy="22" rx="12" ry="22"/>
+        <ellipse class="petalo" cx="50" cy="22" rx="12" ry="22"/>
+        <ellipse class="petalo" cx="50" cy="22" rx="12" ry="22"/>
+        <ellipse class="petalo" cx="50" cy="22" rx="12" ry="22"/>
+        <ellipse class="petalo" cx="50" cy="22" rx="12" ry="22"/>
+      </g>
+    </svg>
+
+  </div>
+
+  <div class="mensaje">¡Un ramo especial para ti! 🌸</div>
+
+  <button class="replay btn-centrado">Repetir Magia ✨</button>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

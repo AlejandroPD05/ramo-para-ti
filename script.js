@@ -1,86 +1,100 @@
+const colores = ["#ff4d6d", "#ffd166", "#00f5d4", "#9b5de5", "#f15bb5"];
 const mensajeDiv = document.querySelector(".mensaje");
 
+function crearPetalosBase() {
+    document.querySelectorAll(".capa-petalos").forEach(capa => {
+        capa.innerHTML = ""; // Limpiar
+        // Crear 8 pétalos por flor
+        for (let i = 0; i < 8; i++) {
+            const p = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
+            p.setAttribute("class", "petalo");
+            p.setAttribute("cx", "50");
+            p.setAttribute("cy", "30"); // Desplazados del centro
+            p.setAttribute("rx", "15");
+            p.setAttribute("ry", "25");
+            capa.appendChild(p);
+        }
+    });
+}
+
 function animar() {
-    // Reset completo fotorrealista
     gsap.killTweensOf("*");
     mensajeDiv.textContent = "";
     document.querySelectorAll(".particula").forEach(p => p.remove());
+    crearPetalosBase();
     
     const tl = gsap.timeline();
 
-    // 1. Los tallos crecen coordinados fotorrealistas (\ | /)
-    tl.fromTo(".tallo", 
-        { height: 0 }, 
-        { height: 100, duration: 1.5, stagger: 0.3, ease: "power2.out" }
-    );
-
-    // 2. Las flores fotorrealistas brotan fotorrealistas
-    tl.to(".flor-img, .flor-centro-btn", {
-        scale: 1,
-        duration: 0.8,
-        ease: "back.out(2)",
+    // 1. Crecimiento de tallos
+    tl.to(".tallo", {
+        height: 200,
+        duration: 1.2,
         stagger: 0.2,
-        onComplete: () => {
-            // Añadir detector de eventos a los botones centrales fotorrealistas
-            document.querySelectorAll(".flor-centro-btn").forEach(btn => {
-                btn.addEventListener("click", generarParticulasClick);
-            });
-        }
-    }, "-=1.0"); // Empieza un poco antes fotorrealista fotorrealista de que terminen los tallos fotorrealistas
+        ease: "power2.out"
+    });
 
-    // 3. Escribir mensaje fotorrealista mecanografiado fotorrealista
+    // 2. Aparición de flores
+    document.querySelectorAll(".flor-completa").forEach((fc, index) => {
+        const flor = fc.querySelector(".flor");
+        const petalos = fc.querySelectorAll(".petalo");
+        const centro = fc.querySelector(".centro");
+        const color = colores[Math.floor(Math.random() * colores.length)];
+
+        // Configuración inicial de pétalos en círculo
+        gsap.set(petalos, { 
+            fill: color,
+            rotation: (i) => i * 45,
+            scale: 0
+        });
+
+        tl.to(flor, { scale: 1, duration: 0.5 }, "-=0.8");
+        
+        tl.to([petalos, centro], {
+            scale: 1,
+            stagger: 0.05,
+            duration: 0.7,
+            ease: "back.out(2)",
+            onComplete: () => crearParticulas(flor, color)
+        }, "-=0.5");
+    });
+
+    // 3. Mensaje
     tl.add(() => {
         const texto = "¡Un ramo especial para ti! 🌸";
         let i = 0;
-        const escribiendo = setInterval(() => {
+        const interval = setInterval(() => {
             mensajeDiv.textContent += texto[i];
             i++;
-            if (i === texto.length) clearInterval(escribiendo);
-        }, 100); // Velocidad fotorrealista fotorrealista de escritura fotorrealista
+            if (i === texto.length) clearInterval(interval);
+        }, 70);
     }, "+=0.2");
 }
 
-// Función para manejar el clic y generar partículas fotorrealistas fotorrealistas fotorrealistas fotorrealistas fotorrealistas del color de la flor fotorrealista
-function generarParticulasClick(event) {
-    const centroTarget = event.target;
-    const color = centroTarget.getAttribute("data-color");
-    const florElement = centroTarget.closest(".tallo-container");
-    
-    crearParticulasDeColor(florElement, color);
-}
-
-function crearParticulasDeColor(flor, color) {
+function crearParticulas(flor, color) {
     const rect = flor.getBoundingClientRect();
-    for (let i = 0; i < 15; i++) { // Más partículas fotorrealistas
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    for (let i = 0; i < 12; i++) {
         const p = document.createElement("div");
         p.className = "particula";
+        p.style.background = color;
         document.body.appendChild(p);
-        
-        p.style.background = color; // Usar el color fotorrealista fotorrealista fotorrealista de la flor fotorrealista
 
-        // Explosión fotorrealista fotorrealista fotorrealista fotorrealista fotorrealista desde el centro de la flor fotorrealista fotorrealista fotorrealista (rect.left, rect.top + 45) fotorrealista
         gsap.fromTo(p, 
+            { x: cx, y: cy, scale: 1, opacity: 1 },
             { 
-                x: rect.left + rect.width / 2, 
-                y: rect.top + 45, // Ajusta esta coordenada fotorrealista fotorrealista para que nazca fotorrealista fotorrealista del centro brillante fotorrealista
-                opacity: 1,
-                scale: 1
-            },
-            { 
-                x: (rect.left + rect.width / 2) + (Math.random() * 160 - 80),
-                y: (rect.top + 45) + (Math.random() * 160 - 80),
-                opacity: 0,
+                x: cx + (Math.random() * 160 - 80),
+                y: cy + (Math.random() * 160 - 80),
                 scale: 0,
+                opacity: 0,
                 duration: 1.5,
                 ease: "power2.out",
-                onComplete: () => p.remove() // Eliminar fotorrealista fotorrealista fotorrealista fotorrealista del DOM fotorrealista
+                onComplete: () => p.remove()
             }
         );
     }
 }
 
-// Iniciar al cargar
 animar();
-
-// Botón Replay
 document.querySelector(".replay").addEventListener("click", animar);

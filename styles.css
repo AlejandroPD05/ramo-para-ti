@@ -1,7 +1,7 @@
 body {
     margin: 0;
-    background: #111;
-    font-family: sans-serif;
+    background: #0f0f0f;
+    font-family: 'Segoe UI', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,101 +17,88 @@ body {
 
 .ramo {
     position: relative;
-    width: 300px; /* Un poco más ancho para el fotorrealismo */
-    height: 450px;
-    margin: auto;
+    width: 300px;
+    height: 400px;
 }
 
-/* El jarrón/envoltorio de papel de estilo fotorrealista y cónico */
-.envoltorio-papel {
+.papel {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 200px;
-    height: 180px;
+    width: 180px;
+    height: 160px;
     background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
-    clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%); /* Forma cónica fotorrealista */
-    border-radius: 0 0 20px 20px;
-    z-index: 10; /* Encima de los tallos inferiores */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+    z-index: 10;
+    border-radius: 0 0 15px 15px;
 }
 
-/* Contenedor para cada tallo y flor fotorrealista para una orientación más fácil (\ | /) */
-.tallo-container {
+.flor-completa {
     position: absolute;
-    bottom: 160px; /* Comienza justo encima del papel */
+    bottom: 80px; /* Sale desde dentro del papel */
     width: 100px;
-    height: 250px;
+    height: 300px;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
     transform-origin: bottom center;
 }
 
-/* Orientación y posición de los contenedores de tallos (\ | /) */
-.tc1 { left: 20px; transform: rotate(-15deg); } /* Izquierdo - Rojo \ */
-.tc2 { left: 100px; transform: rotate(0deg); }   /* Central - Azul | */
-.tc3 { left: 180px; transform: rotate(15deg); }  /* Derecho - Teal / */
+/* Orientación del ramo */
+.fc1 { left: 20px; transform: rotate(-15deg); }
+.fc2 { left: 100px; transform: rotate(0deg); }
+.fc3 { left: 180px; transform: rotate(15deg); }
 
 .tallo {
     width: 4px;
-    height: 0; /* Empieza en 0 para la animación */
-    background: linear-gradient(#0f0, green);
+    height: 0;
+    background: linear-gradient(to top, #1b4d3e, #4CAF50);
     border-radius: 2px;
 }
 
-.flor-img {
-    width: 90px;
-    height: auto;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-    z-index: 5; /* Detrás del botón central */
-    transform: scale(0); /* Empieza oculto fotorrealista */
+.flor {
+    width: 100px;
+    height: 100px;
+    overflow: visible;
+    transform: scale(0);
 }
 
-/* El "Botón Central" interactivo y brillante fotorrealista */
-.flor-centro-btn {
-    position: absolute;
-    top: 35px; /* Ajusta la posición sobre la imagen de la flor fotorrealista fotorrealista */
-    width: 15px;
-    height: 15px;
-    background: #ffdb58; /* Color base dorado */
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 0 15px #fff176, 0 0 30px #fff176; /* Brillo intenso */
-    z-index: 20; /* Encima de todo */
-    transition: transform 0.2s;
-    transform: scale(0); /* Empieza oculto fotorrealista */
+.petalo {
+    transform-origin: 50% 50%;
 }
 
-.flor-centro-btn:hover {
-    transform: scale(1.2); /* Efecto de hover */
+.centro {
+    fill: #ffdb58;
+    filter: drop-shadow(0 0 5px rgba(255, 219, 88, 0.8));
 }
 
-/* Mensaje fotorrealista y Botón de Reinicio fotorrealista */
 .mensaje {
     color: white;
     font-size: 24px;
-    margin-top: 20px;
-    min-height: 40px; /* Evita saltos de layout */
+    margin-top: 25px;
+    min-height: 32px;
 }
 
 .replay {
-    margin-top: 10px;
-    padding: 10px 20px;
+    margin-top: 20px;
+    padding: 12px 25px;
     border: none;
-    border-radius: 20px;
+    border-radius: 25px;
     background: #ff4d6d;
     color: white;
-    cursor: pointer;
     font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
 }
 
-/* Partículas fotorrealistas */
+.replay:hover { transform: scale(1.1); }
+
 .particula {
     position: absolute;
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    pointer-events: none; /* No interfiere con los clics fotorrealistas */
+    pointer-events: none;
+    z-index: 20;
 }

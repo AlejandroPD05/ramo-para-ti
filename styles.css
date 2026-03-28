@@ -21,6 +21,7 @@ body {
     height: 400px;
 }
 
+/* Jarrón rosa simple fotorrealista */
 .papel {
     position: absolute;
     bottom: 0;
@@ -28,55 +29,65 @@ body {
     transform: translateX(-50%);
     width: 200px;
     height: 180px;
-    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
-    clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
-    border-radius: 0 0 20px 20px;
-    z-index: 2; /* Encima de los tallos */
+    background: #ffb6c1; /* Color rosa del original */
+    border-radius: 20px 20px 0 0;
+    z-index: 2; /* Encima de los tallos inferiores */
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
+/* Tallos alineados verticalmente */
 .tallo {
     position: absolute;
-    bottom: 80px; /* Comienza dentro del papel */
     width: 4px;
     height: 0;
     background: linear-gradient(to top, #1b4d3e, #4CAF50);
     border-radius: 2px;
-    z-index: 1; /* Detrás del papel */
+    z-index: 1; /* Detrás del jarrón */
 }
 
-/* Alineación de tallos para coincidir con flores */
-.t1 { left: 80px; transform: rotate(-15deg); }
-.t2 { left: 148px; }
-.t3 { left: 216px; transform: rotate(15deg); }
+/* Bases de tallos para terminar en las flores */
+.t1 { left: 60px; bottom: 80px; }
+.t2 { left: 110px; bottom: 110px; } /* Central más alto */
+.t3 { left: 160px; bottom: 80px; }
 
+/* Flores fotorrealistas */
 .flor {
     position: absolute;
     width: 100px;
     height: 100px;
-    z-index: 3; /* Encima de todo */
+    z-index: 3; /* Encima del jarrón */
+    overflow: visible !important;
 }
 
-/* Posicionamiento de flores */
-.f1 { left: 30px; bottom: 230px; }
-.f2 { left: 100px; bottom: 270px; }
-.f3 { left: 170px; bottom: 230px; }
+/* Centros de flores alineados con los tallos */
+.f1 { left: 10px; bottom: 210px; }
+.f2 { left: 60px; bottom: 240px; } /* Central más alta */
+.f3 { left: 110px; bottom: 210px; }
 
 /* REGLA CLAVE: Los pétalos rotan sobre el centro del SVG */
 .petalo {
     transform-origin: 50% 50%;
 }
 
-.centro {
-    fill: #ffdb58;
-    filter: drop-shadow(0 0 5px rgba(255, 241, 118, 0.8));
+/* CORRECCIÓN INTERACTIVA: El clic se detecta sobre toda la forma de la flor */
+.petalos {
+    pointer-events: all;
+    cursor: pointer;
 }
 
+.centro {
+    fill: #ffdb58;
+    filter: drop-shadow(0 0 5px #fff176);
+}
+
+/* Texto mecanografiado con EFECTO GLOW */
 .mensaje {
     color: white;
     font-size: 26px;
     margin-top: 30px;
     min-height: 40px;
+    font-weight: 300;
+    text-shadow: 0 0 10px #fff, 0 0 20px #ffb3c1; /* Efecto de brillo */
 }
 
 .replay {

@@ -1,98 +1,128 @@
-// Una lista más variada y vibrante de colores
-const colores = ["#ff4d6d", "#ffd166", "#00f5d4", "#9b5de5", "#f15bb5", "#4caff0", "#ff8c00", "#7cfc00"];
-const colorFlores = []; // Vacío para forzar colores aleatorios cada vez
-const mensaje = document.querySelector(".mensaje");
+// Una lista más variada y alegre de colores para las flores
+const colores = [
+    "#ff4d6d", // Rojo rosado
+    "#ffd166", // Amarillo naranja
+    "#00f5d4", // Turquesa
+    "#9b5de5", // Violeta
+    "#f15bb5", // Rosa chicle
+    "#ff9f43", // Naranja vibrante
+    "#0984e3"  // Azul brillante
+];
+// Vacío para forzar colores aleatorios cada vez que se pulse 'Repetir'
+const colorFlores = []; 
+
+const mensajeDiv = document.querySelector(".mensaje");
 
 function animar() {
-  // Reset
-  gsap.killTweensOf("*");
-  mensaje.style.opacity = 0;
-  document.querySelectorAll(".particula").forEach(p => p.remove());
+    // Reset completo
+    gsap.killTweensOf("*");
+    mensajeDiv.textContent = "";
+    document.querySelectorAll(".particula").forEach(p => p.remove());
 
-  // Tallos
-  gsap.fromTo(".tallo",
-    {height:0},
-    {height:110, duration:1.2, stagger:0.2, ease:"power2.out"}
-  );
+    const tl = gsap.timeline();
 
-  // Flores
-  gsap.utils.toArray(".flor").forEach((flor, index) => {
-    const petalos = flor.querySelectorAll(".petalo");
-
-    // Siempre elegirá un color aleatorio para cada flor
-    const randomColor = colores[Math.floor(Math.random()*colores.length)];
-    petalos.forEach(p => p.style.fill = randomColor);
-
-    // Distribución circular
-    gsap.set(petalos, {rotation: (i) => i * (360 / petalos.length)});
-
-    // Animación de apertura
-    gsap.fromTo(petalos,
-      {scaleY:0},
-      {
-        scaleY:1,
-        duration:1,
-        stagger:0.1,
-        delay:0.5 + index * 0.3,
-        ease:"back.out(2.5)",
-        onComplete:()=> crearParticulas(flor)
-      }
+    // 1. Los tallos crecen desde el envoltorio
+    tl.fromTo(".tallo",
+        {height: 0},
+        {height: 120, duration: 1.5, stagger: 0.3, ease: "power2.out"}
     );
 
-    // Movimiento vivo vertical
-    gsap.to(flor, {y:"+=8", repeat:-1, yoyo:true, duration:2.5 + Math.random(), ease: "sine.inOut"});
+    // 2. Las flores brotan y se abren
+    gsap.utils.toArray(".flor").forEach((flor, index) => {
+        const petalos = flor.querySelectorAll(".petalo");
+        const centro = flor.querySelector(".centro");
 
-    // Movimiento giratorio suave de pétalos
-    petalos.forEach(p => {
-      gsap.to(p, {
-        rotation:"+=12",
-        repeat:-1,
-        yoyo:true,
-        duration:3 + Math.random(),
-        ease:"sine.inOut"
-      });
-    });
-  });
+        // Elegimos un color aleatorio para cada flor
+        const randomColor = colores[Math.floor(Math.random() * colores.length)];
+        gsap.set(petalos, {fill: randomColor});
 
-  // Mensaje tipo "typing" con el texto de tu imagen
-  setTimeout(() => {
-    mensaje.textContent = "";
-    mensaje.style.opacity = 1;
-    const texto = "¡Un ramo especial para ti! 🌸";
-    texto.split("").forEach((letra,i)=>{
-      setTimeout(()=> mensaje.textContent += letra, 100*i);
+        // CLAVE: Distribuir pétalos en círculo alrededor del centro (50,50)
+        gsap.set(petalos, {
+            rotation: (i) => i * (360 / petalos.length),
+            scale: 0,
+            transformOrigin: "50% 50%" // Punto de giro central
+        });
+        gsap.set(centro, {scale: 0, transformOrigin: "50% 50%"});
+
+        // Animación de aparición (Back ease hace que 'reboten' al abrirse)
+        tl.to([centro, petalos], {
+            scale: 1,
+            duration: 1,
+            stagger: 0.1,
+            ease: "back.out(2.5)",
+            // Explosión de partículas al terminar de abrirse
+            onComplete: () => crearEstallidoParticulas(flor, randomColor)
+        }, "-=1.0"); // Empieza un poco antes de que termine el tallo
+
+        // Movimiento vivo horizontal (balanceo suave)
+        gsap.to(flor, {
+            x: index % 2 === 0 ? "+=10" : "-=10",
+            duration: 2 + Math.random(),
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+
+        // Movimiento giratorio casi imperceptible de los pétalos
+        petalos.forEach(p => {
+            gsap.to(p, {
+                rotation: "+=5",
+                repeat: -1,
+                yoyo: true,
+                duration: 3 + Math.random(),
+                ease: "sine.inOut"
+            });
+        });
     });
-  }, 1200);
+
+    // 3. Mensaje mecanografiado con el texto de tu imagen
+    tl.add(() => {
+        const texto = "¡Un ramo especial para ti! 🌸";
+        let i = 0;
+        const escribiendo = setInterval(() => {
+            mensajeDiv.textContent += texto[i];
+            i++;
+            if (i === texto.length) clearInterval(escribiendo);
+        }, 100); // Velocidad de escritura
+    }, "+=0.5");
 }
 
-// Crear partículas desde la flor
-function crearParticulas(flor){
-  const rect = flor.getBoundingClientRect();
-  const x0 = rect.left + rect.width/2;
-  const y0 = rect.top + rect.height/2;
+// Crea una explosión de partículas del color de la flor
+function crearEstallidoParticulas(flor, color) {
+    const rect = flor.getBoundingClientRect();
+    // Centro de la flor en la pantalla
+    const x0 = rect.left + rect.width / 2;
+    const y0 = rect.top + rect.height / 2;
 
-  for(let i=0;i<15;i++){
-    let part = document.createElement("div");
-    part.className = "particula";
-    document.body.appendChild(part);
+    for (let i = 0; i < 15; i++) {
+        const part = document.createElement("div");
+        part.className = "particula";
+        document.body.appendChild(part);
+        
+        // Las partículas son del color de la flor pero con brillo blanco
+        part.style.background = color;
+        part.style.boxShadow = `0 0 10px white, 0 0 5px ${color}`;
 
-    gsap.fromTo(part,
-      {x:x0, y:y0, opacity:1, scale:Math.random()*0.6+0.4},
-      {
-        x:x0 + (Math.random()*120-60),
-        y:y0 + (Math.random()*120-60),
-        opacity:0,
-        scale:0,
-        duration:1.5 + Math.random()*0.5,
-        ease:"power1.out",
-        onComplete:()=> part.remove()
-      }
-    );
-  }
+        // Explosión radial
+        gsap.fromTo(part,
+            {x: x0, y: y0, opacity: 1, scale: Math.random() * 0.7 + 0.3},
+            {
+                // Dirección aleatoria
+                x: x0 + (Math.random() * 160 - 80),
+                y: y0 + (Math.random() * 160 - 80),
+                opacity: 0,
+                scale: 0,
+                duration: 1.5 + Math.random() * 0.5,
+                ease: "power2.out",
+                // Limpieza del DOM
+                onComplete: () => part.remove()
+            }
+        );
+    }
 }
 
-// Primera vez
+// Iniciar al cargar la página
 animar();
 
-// Replay
+// Botón Replay
 document.querySelector(".replay").addEventListener("click", animar);

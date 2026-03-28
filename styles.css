@@ -1,7 +1,7 @@
 body {
   margin:0;
-  background:#111;
-  font-family:sans-serif;
+  background:#121212; /* Fondo casi negro para que resalten los colores */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -15,86 +15,98 @@ body {
 
 .ramo {
   position:relative;
-  width:250px;
-  height:400px;
+  width:280px;
+  height:420px;
   margin:auto;
-  overflow: hidden; /* CLAVE: Oculta la base de los tallos */
+  overflow: hidden; /* Oculta la base de los tallos */
 }
 
+/* Envoltorio de papel con forma cónica */
 .papel {
   position:absolute;
   bottom:0;
-  width:100%;
-  height:170px;
-  /* Degradado morado claro como en tu imagen */
-  background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
-  /* Usa clip-path para forma trapezoidal cónica */
-  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
-  border-radius: 0 0 20px 20px; /* Un toque redondeado abajo */
-  z-index: 1; /* Detrás de las flores y tallos */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 190px;
+  height: 180px;
+  /* Degradado suave rosa/azul como en tu imagen */
+  background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+  /* clip-path crea la forma trapezoidal del ramo */
+  clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+  border-radius: 0 0 20px 20px;
+  z-index: 1; /* Detrás de las flores */
 }
 
 .tallo {
   position:absolute;
-  bottom:150px; /* Comienza dentro del papel */
+  bottom: 150px; /* Comienza dentro del papel */
   width:4px;
   height:0;
-  background:linear-gradient(green,#0f0);
-  z-index: 2; /* Encima del papel */
+  background: linear-gradient(to top, green, #0f0);
+  border-radius: 2px;
+  z-index: 2;
 }
-/* Posiciones de los tallos centrados */
-.t1 { left: 75px; }
-.t2 { left: 125px; }
-.t3 { left: 175px; }
 
-/* Flores */
+/* Posiciones de los tallos coordinadas */
+.t1 { left: 70px; }
+.t2 { left: 140px; }
+.t3 { left: 210px; }
+
+/* Flores SVG */
 .flor {
   position:absolute;
-  width:90px;
-  height:90px;
-  bottom: 260px; /* Todas alineadas sobre la altura máxima del tallo */
-  z-index: 2; /* Encima del papel */
+  width:100px;
+  height:100px;
+  z-index: 3; /* Encima de todo */
+  overflow: visible !important; /* Para que los pétalos no se corten */
 }
 
-/* Posiciones de las flores centradas sobre los tallos */
-.f1 { left: 27px; }
-.f2 { left: 77px; }
-.f3 { left: 127px; }
+/* Alineación de las flores sobre los tallos */
+.f1 { left: 22px; bottom: 260px; }
+.f2 { left: 92px; bottom: 290px; } /* Central un poco más alta */
+.f3 { left: 162px; bottom: 260px; }
 
+/* CLAVE: Los pétalos rotan desde el centro exacto del SVG (50,50) */
 .petalo {
-  transform-origin:50% 80%;
+  transform-origin: 50% 50%;
 }
 
 .centro {
-  fill:yellow;
-  filter: drop-shadow(0 0 8px yellow);
+  fill: #ffdb58; /* Amarillo dorado brillante */
+  filter: drop-shadow(0 0 8px #fff176);
 }
 
-/* Mensaje */
+/* Mensaje mecanografiado */
 .mensaje {
-  opacity:0;
   color:white;
-  font-size:28px;
+  font-size:26px;
   margin-top:20px;
+  min-height: 35px; /* Evita saltos de layout */
+  font-weight: 300;
 }
 
-/* Botón */
+/* Botón con estilo moderno */
 .replay {
-  margin-top:10px;
-  padding:8px 16px;
+  margin-top:15px;
+  padding:10px 20px;
   border:none;
-  border-radius:10px;
+  border-radius:20px;
   background:#ff4d6d;
   color:white;
+  font-weight: bold;
   cursor:pointer;
+  transition: transform 0.2s;
 }
 
-/* Partículas */
+.replay:hover {
+  transform: scale(1.1);
+}
+
+/* Partículas de la explosión */
 .particula {
   position:absolute;
   width:6px;
   height:6px;
-  background:#fff;
   border-radius:50%;
   pointer-events:none;
 }

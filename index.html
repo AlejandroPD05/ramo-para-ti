@@ -2,37 +2,39 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Alba 🌸</title>
+    <title>Ramo para Alba 🌸</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="container">
+        <div class="ramo">
+            <div class="tallo t1"></div>
+            <div class="tallo t2"></div>
+            <div class="tallo t3"></div>
 
-<div class="container">
-    <div class="ramo">
-        <div class="envoltorio-papel"></div>
+            <svg class="flor f1" viewBox="0 0 100 100" onclick="estallar(this, '#ff4d6d')">
+                <g class="petalos-grp"></g>
+                <circle cx="50" cy="50" r="10" class="centro"/>
+            </svg>
 
-        <div class="tallo-container tc1">
-            <div class="tallo"></div>
-            <img src="images/flor-roja.png" alt="Flor Roja" class="flor-img">
-            <div class="flor-centro-btn" data-color="#ff4d6d"></div> </div>
+            <svg class="flor f2" viewBox="0 0 100 100" onclick="estallar(this, '#ffdb58')">
+                <g class="petalos-grp"></g>
+                <circle cx="50" cy="50" r="10" class="centro"/>
+            </svg>
 
-        <div class="tallo-container tc2">
-            <div class="tallo"></div>
-            <img src="images/flor-azul.png" alt="Flor Azul" class="flor-img">
-            <div class="flor-centro-btn" data-color="#4caff0"></div> </div>
+            <svg class="flor f3" viewBox="0 0 100 100" onclick="estallar(this, '#9b5de5')">
+                <g class="petalos-grp"></g>
+                <circle cx="50" cy="50" r="10" class="centro"/>
+            </svg>
 
-        <div class="tallo-container tc3">
-            <div class="tallo"></div>
-            <img src="images/flor-teal.png" alt="Flor Teal" class="flor-img">
-            <div class="flor-centro-btn" data-color="#00f5d4"></div> </div>
+            <div class="papel"></div>
+        </div>
+
+        <div class="mensaje"></div>
+        <button class="replay" onclick="iniciarAnimacion()">Repetir Magia ✨</button>
     </div>
 
-    <div class="mensaje">¡Un ramo especial para ti! 🌸</div>
-    <button class="replay">Repetir Magia ✨</button>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

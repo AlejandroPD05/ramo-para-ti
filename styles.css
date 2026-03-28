@@ -1,117 +1,56 @@
 body {
-    margin: 0;
-    background: #111;
-    font-family: sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
+    margin: 0; background: #121212;
+    display: flex; justify-content: center; align-items: center;
+    height: 100vh; font-family: sans-serif; overflow: hidden;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+.ramo { position: relative; width: 300px; height: 400px; }
 
-.ramo {
-    position: relative;
-    width: 300px; /* Un poco más ancho para el fotorrealismo */
-    height: 450px;
-    margin: auto;
-}
-
-/* El jarrón/envoltorio de papel de estilo fotorrealista y cónico */
-.envoltorio-papel {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
+/* PAPEL CÓNICO (Trapecio) */
+.papel {
+    position: absolute; bottom: 0; left: 50%;
     transform: translateX(-50%);
-    width: 200px;
-    height: 180px;
-    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
-    clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%); /* Forma cónica */
-    border-radius: 0 0 20px 20px;
-    z-index: 10; /* Encima de los tallos inferiores */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    width: 180px; height: 160px;
+    background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+    clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
+    z-index: 10;
 }
 
-/* Contenedor para cada tallo y flor para una orientación más fácil (\ | /) */
-.tallo-container {
-    position: absolute;
-    bottom: 160px; /* Comienza justo encima del papel */
-    width: 100px;
-    height: 250px;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    transform-origin: bottom center;
-}
-
-/* Orientación y posición de los contenedores de tallos (\ | /) */
-.tc1 { left: 20px; transform: rotate(-15deg); } /* Izquierdo - Rojo \ */
-.tc2 { left: 100px; transform: rotate(0deg); }   /* Central - Azul | */
-.tc3 { left: 180px; transform: rotate(15deg); }  /* Derecho - Teal / */
-
+/* TALLOS EN ABANICO \ | / */
 .tallo {
-    width: 4px;
-    height: 0; /* Empieza en 0 para la animación */
-    background: linear-gradient(#0f0, green);
-    border-radius: 2px;
+    position: absolute; bottom: 50px; left: 50%;
+    width: 4px; height: 0; background: #2d5a27;
+    transform-origin: bottom center; z-index: 5;
 }
+.t1 { transform: translateX(-50%) rotate(-20deg); }
+.t2 { transform: translateX(-50%) rotate(0deg); }
+.t3 { transform: translateX(-50%) rotate(20deg); }
 
-.flor-img {
-    width: 90px;
-    height: auto;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-    z-index: 5; /* Detrás del botón central */
-    transform: scale(0); /* Empieza oculto */
+/* FLORES */
+.flor {
+    position: absolute; width: 80px; height: 80px;
+    z-index: 15; cursor: pointer; overflow: visible;
 }
+.f1 { left: 20px; top: 80px; }
+.f2 { left: 110px; top: 40px; }
+.f3 { left: 200px; top: 80px; }
 
-/* El "Botón Central" interactivo y brillante */
-.flor-centro-btn {
-    position: absolute;
-    top: 35px; /* Ajusta la posición sobre la imagen de la flor fotorrealista */
-    width: 15px;
-    height: 15px;
-    background: #ffdb58; /* Color base dorado */
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 0 15px #fff176, 0 0 30px #fff176; /* Brillo intenso */
-    z-index: 20; /* Encima de todo */
-    transition: transform 0.2s;
-    transform: scale(0); /* Empieza oculto */
-}
+.petalo { transform-origin: 50px 50px; }
+.centro { fill: #fff176; filter: drop-shadow(0 0 5px gold); }
 
-.flor-centro-btn:hover {
-    transform: scale(1.2); /* Efecto de hover */
-}
-
-/* Mensaje y Botón de Reinicio */
+/* TEXTO CON GLOW */
 .mensaje {
-    color: white;
-    font-size: 24px;
-    margin-top: 20px;
-    min-height: 40px; /* Evita saltos de layout */
+    color: white; font-size: 24px; margin-top: 20px;
+    text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d;
+    min-height: 30px; text-align: center;
 }
 
 .replay {
-    margin-top: 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    background: #ff4d6d;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
+    margin-top: 20px; padding: 10px 25px; border: none;
+    border-radius: 20px; background: #ff4d6d; color: white;
+    cursor: pointer; font-weight: bold; transition: 0.3s;
 }
 
-/* Partículas */
 .particula {
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    pointer-events: none; /* No interfiere con los clics */
+    position: absolute; pointer-events: none; border-radius: 50%;
 }

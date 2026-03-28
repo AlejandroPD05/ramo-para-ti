@@ -1,86 +1,71 @@
-const mensajeDiv = document.querySelector(".mensaje");
+const colores = ["#ff4d6d", "#ffdb58", "#9b5de5", "#f15bb5", "#00f5d4"];
 
-function animar() {
-    // Reset completo
-    gsap.killTweensOf("*");
-    mensajeDiv.textContent = "";
-    document.querySelectorAll(".particula").forEach(p => p.remove());
-    
-    const tl = gsap.timeline();
-
-    // 1. Los tallos crecen coordinados (\ | /)
-    tl.fromTo(".tallo", 
-        { height: 0 }, 
-        { height: 100, duration: 1.5, stagger: 0.3, ease: "power2.out" }
-    );
-
-    // 2. Las flores fotorrealistas brotan
-    tl.to(".flor-img, .flor-centro-btn", {
-        scale: 1,
-        duration: 0.8,
-        ease: "back.out(2)",
-        stagger: 0.2,
-        onComplete: () => {
-            // Añadir detector de eventos a los botones centrales
-            document.querySelectorAll(".flor-centro-btn").forEach(btn => {
-                btn.addEventListener("click", generarParticulasClick);
-            });
+function crearPetalos() {
+    document.querySelectorAll('.petalos-grp').forEach((grp, fIdx) => {
+        grp.innerHTML = ''; // Limpiar
+        const numPetalos = 6;
+        for (let i = 0; i < numPetalos; i++) {
+            const el = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
+            el.setAttribute("cx", "50"); el.setAttribute("cy", "25");
+            el.setAttribute("rx", "12"); el.setAttribute("ry", "25");
+            el.setAttribute("class", "petalo");
+            el.style.fill = colores[fIdx % colores.length];
+            el.style.transform = `rotate(${i * (360 / numPetalos)}deg)`;
+            grp.appendChild(el);
         }
-    }, "-=1.0"); // Empieza un poco antes de que terminen los tallos
-
-    // 3. Escribir mensaje mecanografiado
-    tl.add(() => {
-        const texto = "¡Un ramo especial para ti! 🌸";
-        let i = 0;
-        const escribiendo = setInterval(() => {
-            mensajeDiv.textContent += texto[i];
-            i++;
-            if (i === texto.length) clearInterval(escribiendo);
-        }, 100);
-    }, "+=0.2");
+    });
 }
 
-// Función para manejar el clic y generar partículas del color de la flor
-function generarParticulasClick(event) {
-    const centroTarget = event.target;
-    const color = centroTarget.getAttribute("data-color");
-    const florElement = centroTarget.closest(".tallo-container");
+function iniciarAnimacion() {
+    crearPetalos();
+    const tl = gsap.timeline();
     
-    crearParticulasDeColor(florElement, color);
+    // Reset
+    gsap.set(".tallo", { height: 0 });
+    gsap.set(".flor", { scale: 0 });
+    document.querySelector(".mensaje").textContent = "";
+
+    // 1. Tallos crecen
+    tl.to(".tallo", { height: 200, duration: 1, stagger: 0.2 });
+    
+    // 2. Flores brotan
+    tl.to(".flor", { scale: 1, duration: 0.8, ease: "back.out(2)", stagger: 0.2 }, "-=0.5");
+
+    // 3. Texto rápido con glow
+    tl.add(() => {
+        const txt = "¡Un ramo especial para ti! 🌸";
+        let i = 0;
+        const interval = setInterval(() => {
+            document.querySelector(".mensaje").textContent += txt[i];
+            i++;
+            if (i === txt.length) clearInterval(interval);
+        }, 50); // 50ms para que sea rápido
+    });
 }
 
-function crearParticulasDeColor(flor, color) {
-    const rect = flor.getBoundingClientRect();
+function estallar(el, color) {
+    const rect = el.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
     for (let i = 0; i < 15; i++) {
         const p = document.createElement("div");
         p.className = "particula";
+        p.style.width = p.style.height = Math.random() * 8 + 4 + "px";
+        p.style.background = color;
+        p.style.left = centerX + "px";
+        p.style.top = centerY + "px";
         document.body.appendChild(p);
-        
-        p.style.background = color; // Usar el color de la flor
 
-        // Explosión desde el centro fotorrealista (rect.left, rect.top + 45)
-        gsap.fromTo(p, 
-            { 
-                x: rect.left + rect.width / 2, 
-                y: rect.top + 45, // Ajusta esta coordenada para que nazca del centro brillante
-                opacity: 1,
-                scale: 1
-            },
-            { 
-                x: (rect.left + rect.width / 2) + (Math.random() * 160 - 80),
-                y: (rect.top + 45) + (Math.random() * 160 - 80),
-                opacity: 0,
-                scale: 0,
-                duration: 1.5,
-                ease: "power2.out",
-                onComplete: () => p.remove()
-            }
-        );
+        gsap.to(p, {
+            x: (Math.random() - 0.5) * 200,
+            y: (Math.random() - 0.5) * 200,
+            opacity: 0,
+            scale: 0,
+            duration: 1,
+            onComplete: () => p.remove()
+        });
     }
 }
 
-// Iniciar al cargar
-animar();
-
-// Botón Replay
-document.querySelector(".replay").addEventListener("click", animar);
+window.onload = iniciarAnimacion;

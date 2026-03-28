@@ -1,7 +1,8 @@
 // Una lista más variada y alegre de colores para las flores
 const colores = ["#ff4d6d","#ffd166","#00f5d4","#9b5de5","#f15bb5"];
-// Vacío para forzar colores aleatorios cada vez
+// Vacío para forzar colores aleatorios cada vez que se pulse 'Repetir'
 const colorFlores = []; 
+
 const mensajeDiv = document.querySelector(".mensaje");
 
 function animar() {
@@ -12,10 +13,10 @@ function animar() {
     
     const tl = gsap.timeline();
 
-    // 1. Los tallos crecen coordinados
+    // 1. Los tallos crecen desde el papel
     tl.fromTo(".tallo", 
         { height: 0 }, 
-        { height: 110, duration: 1.2, stagger: 0.2, ease: "power2.out" }
+        { height: 180, duration: 1.2, stagger: 0.2, ease: "power2.out" }
     );
 
     // 2. Las flores brotan y se abren
@@ -27,7 +28,7 @@ function animar() {
         const randomColor = colores[Math.floor(Math.random() * colores.length)];
         gsap.set(petalos, {fill: randomColor});
 
-        // Configuración inicial de pétalos
+        // Configuración inicial de pétalos (Geometría centrada 50,50)
         gsap.set(petalos, { 
             rotation: (i) => i * (360 / petalos.length),
             scale: 0,
@@ -38,8 +39,8 @@ function animar() {
         // Animación de brote
         tl.to([centro, petalos], {
             scale: 1,
-            duration: 1,
-            stagger: 0.1,
+            duration: 0.8,
+            stagger: 0.05,
             ease: "back.out(2)",
             // Explosión de partículas al terminar de abrirse
             onComplete: () => crearParticulas(flor)
@@ -56,7 +57,7 @@ function animar() {
         });
     });
 
-    // 3. Escribir mensaje mecanografiado
+    // 3. Escribir mensaje
     tl.add(() => {
         const texto = "¡Un ramo especial para ti! 🌸";
         let i = 0;
@@ -70,7 +71,7 @@ function animar() {
 
 function crearParticulas(flor) {
     const rect = flor.getBoundingClientRect();
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 12; i++) {
         const p = document.createElement("div");
         p.className = "particula";
         document.body.appendChild(p);

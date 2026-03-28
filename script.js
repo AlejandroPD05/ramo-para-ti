@@ -1,46 +1,48 @@
 const colores = ["#ff4d6d","#ffd166","#00f5d4","#9b5de5","#f15bb5"];
-const colorFlores = ["#ff758c", "#ffcc33", "#b28dff"]; 
+const colorFlores = ["#ff4d6d", "#ff85a1", "#ffb3c1"]; 
 const mensajeDiv = document.querySelector(".mensaje");
 
 function animar() {
-    // 1. Reset completo
+    // Reset
     gsap.killTweensOf("*");
     mensajeDiv.textContent = "";
     document.querySelectorAll(".particula").forEach(p => p.remove());
     
     const tl = gsap.timeline();
 
-    // 2. Animación de los tallos (Crecen desde el papel)
+    // 1. Los tallos crecen desde el papel
     tl.fromTo(".tallo", 
         { height: 0 }, 
-        { height: 160, duration: 1.5, stagger: 0.3, ease: "power2.out" }
+        { height: 180, duration: 1.2, stagger: 0.2, ease: "power2.out" }
     );
 
-    // 3. Animación de cada flor
+    // 2. Las flores brotan
     gsap.utils.toArray(".flor").forEach((flor, index) => {
         const petalos = flor.querySelectorAll(".petalo");
         const centro = flor.querySelector(".centro");
 
-        // Color y rotación inicial de pétalos
+        // Configuración inicial de pétalos (rotados y ocultos)
         gsap.set(petalos, { 
             fill: colorFlores[index],
             rotation: (i) => i * (360 / petalos.length),
-            scale: 0
+            scale: 0,
+            transformOrigin: "50% 50%" // Asegura el centro en JS también
         });
-        gsap.set(centro, { scale: 0 });
+        gsap.set(centro, { scale: 0, transformOrigin: "50% 50%" });
 
-        // Aparecer flores después de que crezca su tallo
+        // Animación de aparición
         tl.to([centro, petalos], {
             scale: 1,
             duration: 0.8,
-            stagger: 0.1,
+            stagger: 0.05,
             ease: "back.out(2)",
             onComplete: () => crearParticulas(flor)
-        }, "-=0.5"); // Empieza un poco antes de que termine el tallo
+        }, "-=0.6");
 
-        // Movimiento sutil infinito
+        // Balanceo suave infinito
         gsap.to(flor, {
-            y: "-=10",
+            y: "-=15",
+            rotation: index % 2 === 0 ? 5 : -5,
             duration: 2 + Math.random(),
             repeat: -1,
             yoyo: true,
@@ -48,21 +50,21 @@ function animar() {
         });
     });
 
-    // 4. Mensaje mecanografiado
+    // 3. Escribir mensaje
     tl.add(() => {
         const texto = "¡Un ramo especial para ti! 🌸";
         let i = 0;
-        const interval = setInterval(() => {
+        const escribiendo = setInterval(() => {
             mensajeDiv.textContent += texto[i];
             i++;
-            if (i === texto.length) clearInterval(interval);
+            if (i === texto.length) clearInterval(escribiendo);
         }, 100);
-    }, "+=0.5");
+    }, "+=0.2");
 }
 
 function crearParticulas(flor) {
     const rect = flor.getBoundingClientRect();
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 12; i++) {
         const p = document.createElement("div");
         p.className = "particula";
         document.body.appendChild(p);
@@ -70,21 +72,29 @@ function crearParticulas(flor) {
         const color = colores[Math.floor(Math.random() * colores.length)];
         p.style.background = color;
 
+        // Explosión desde el centro de la flor
         gsap.fromTo(p, 
-            { x: rect.left + 45, y: rect.top + 45, opacity: 1 },
             { 
-                x: rect.left + 45 + (Math.random() * 100 - 50),
-                y: rect.top + 45 + (Math.random() * 100 - 50),
+                x: rect.left + rect.width / 2, 
+                y: rect.top + rect.height / 2, 
+                opacity: 1,
+                scale: 1
+            },
+            { 
+                x: (rect.left + rect.width / 2) + (Math.random() * 160 - 80),
+                y: (rect.top + rect.height / 2) + (Math.random() * 160 - 80),
                 opacity: 0,
-                duration: 1,
+                scale: 0,
+                duration: 1.5,
+                ease: "power2.out",
                 onComplete: () => p.remove()
             }
         );
     }
 }
 
-// Iniciar
+// Iniciar al cargar
 animar();
 
-// Botón de reinicio
+// Botón Replay
 document.querySelector(".replay").addEventListener("click", animar);

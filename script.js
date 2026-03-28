@@ -81,26 +81,31 @@ function generarParticulasClick(event) {
     crearParticulasDeColor(florElement, florColor);
 }
 
+// CORRECCIÓN CLAVE: Generar partículas usando posición fija de pantalla
 function crearParticulasDeColor(flor, color) {
     const rect = flor.getBoundingClientRect();
-    for (let i = 0; i < 15; i++) { // Más partículas
+    const xCenter = rect.left + rect.width / 2;
+    const yCenter = rect.top + rect.height / 2;
+
+    for (let i = 0; i < 15; i++) {
         const p = document.createElement("div");
         p.className = "particula";
         document.body.appendChild(p);
         
-        p.style.background = color; // Usar el color de la flor
+        p.style.background = color;
 
-        // Explosión desde el centro de la flor
+        // GSAP ahora anima las coordenadas fijas de pantalla
         gsap.fromTo(p, 
             { 
-                x: rect.left + rect.width / 2, 
-                y: rect.top + rect.height / 2, 
+                left: xCenter,
+                top: yCenter,
                 opacity: 1,
                 scale: 1
             },
             { 
-                x: (rect.left + rect.width / 2) + (Math.random() * 160 - 80),
-                y: (rect.top + rect.height / 2) + (Math.random() * 160 - 80),
+                // Calcular las posiciones finales fijas de pantalla
+                left: xCenter + (Math.random() * 160 - 80),
+                top: yCenter + (Math.random() * 160 - 80),
                 opacity: 0,
                 scale: 0,
                 duration: 1.5,

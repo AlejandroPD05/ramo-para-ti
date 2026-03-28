@@ -21,7 +21,7 @@ body {
     height: 400px;
 }
 
-/* Jarrón rosa simple */
+/* Envoltorio de papel con clip-path (FORMA DE RAMO) */
 .papel {
     position: absolute;
     bottom: 0;
@@ -29,8 +29,8 @@ body {
     transform: translateX(-50%);
     width: 200px;
     height: 180px;
-    background: #ffb6c1; /* Color rosa del original */
-    border-radius: 20px 20px 0 0;
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); /* Degradado suave */
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%); /* Forma de cono invertido */
     z-index: 2; /* Encima de los tallos */
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
@@ -101,8 +101,9 @@ body {
     transform: scale(1.1);
 }
 
+/* REGLA CLAVE PARA PARTÍCULAS: Fija en la pantalla */
 .particula {
-    position: absolute;
+    position: fixed; /* Coordenadas de pantalla puras */
     width: 6px;
     height: 6px;
     border-radius: 50%;

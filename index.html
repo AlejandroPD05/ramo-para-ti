@@ -14,21 +14,16 @@
     <div class="escena">
         <svg id="ramo-svg" viewBox="0 0 340 480" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                <filter id="glow-suave">
-                    <feGaussianBlur stdDeviation="3" result="blur"/>
-                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                </filter>
                 <filter id="glow-centro">
-                    <feGaussianBlur stdDeviation="4" result="blur"/>
-                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    <feGaussianBlur stdDeviation="3" result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
                 </filter>
                 <radialGradient id="grad-papel" cx="50%" cy="30%" r="70%">
                     <stop offset="0%" stop-color="#f7e0f5"/>
                     <stop offset="100%" stop-color="#d4a8e0"/>
-                </radialGradient>
-                <radialGradient id="grad-papel2" cx="50%" cy="40%" r="60%">
-                    <stop offset="0%" stop-color="#e8d5f5" stop-opacity="0.9"/>
-                    <stop offset="100%" stop-color="#c090d4" stop-opacity="0.3"/>
                 </radialGradient>
                 <linearGradient id="grad-lazo" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stop-color="#ff9de2"/>
@@ -36,31 +31,17 @@
                 </linearGradient>
             </defs>
 
-            <!-- PAPEL DEL RAMO -->
             <g id="g-papel" opacity="0">
                 <polygon points="85,460 255,460 290,310 50,310" fill="url(#grad-papel)" />
-                <polygon points="100,460 240,460 272,330 68,330" fill="url(#grad-papel2)" />
-                <polygon points="85,460 115,460 130,380 95,395" fill="rgba(255,255,255,0.25)" />
-                <polygon points="220,460 255,460 285,320 252,330" fill="rgba(150,80,160,0.18)" />
-                <circle cx="130" cy="420" r="3" fill="rgba(200,130,220,0.5)"/>
-                <circle cx="155" cy="405" r="2" fill="rgba(200,130,220,0.4)"/>
-                <circle cx="175" cy="430" r="2.5" fill="rgba(200,130,220,0.5)"/>
-                <circle cx="200" cy="415" r="2" fill="rgba(200,130,220,0.4)"/>
-                <circle cx="215" cy="440" r="3" fill="rgba(200,130,220,0.5)"/>
                 <g id="g-lazo">
-                    <ellipse cx="170" cy="308" rx="14" ry="10" fill="url(#grad-lazo)" opacity="0.95"/>
-                    <path d="M 156 308 Q 130 285 118 295 Q 110 305 130 312 Q 142 316 156 308 Z" fill="#ff9de2" opacity="0.9"/>
-                    <path d="M 184 308 Q 210 285 222 295 Q 230 305 210 312 Q 198 316 184 308 Z" fill="#ff6bc8" opacity="0.9"/>
-                    <path d="M 163 316 Q 148 340 140 370" stroke="#ff9de2" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
-                    <path d="M 177 316 Q 192 340 200 370" stroke="#ff6bc8" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
+                    <ellipse cx="170" cy="308" rx="14" ry="10" fill="url(#grad-lazo)"/>
+                    <path d="M 156 308 Q 130 285 118 295 Q 110 305 130 312 Q 142 316 156 308 Z" fill="#ff9de2"/>
+                    <path d="M 184 308 Q 210 285 222 295 Q 230 305 210 312 Q 198 316 184 308 Z" fill="#ff6bc8"/>
                 </g>
             </g>
-
-            <!-- GRUPO DE FLORES -->
             <g id="g-flores"></g>
         </svg>
     </div>
-
     <div class="mensaje" id="mensaje"></div>
     <button class="btn-replay" id="btn-replay">✦ Repetir magia</button>
 </div>
